@@ -4,6 +4,7 @@ import NotificationsPage from "./NotificationsPage";
 import MessagesPage from "./MessagesPage";
 import DreamFlowPage from "./DreamFlowPage";
 import ResumeAnalyserPage from "./ResumeAnalyserPage"; // <-- Import the new page
+import CommunityPage from "./CommunityPage";
 import { collection, collectionGroup, query, where, onSnapshot } from "firebase/firestore"; 
 import { db } from "../firebase";
 import {
@@ -134,6 +135,7 @@ export default function Dashboard() {
     }
     switch (activeIndex) {
       case 0: return <PeoplePage userName={userName || userEmail} currentUser={user} />;
+      case 3: return <CommunityPage currentUser={user} />;
       case 4: return <DreamFlowPage currentUser={user} />;
       case 5: return <NotificationsPage currentUser={user} />;
       case 6: return <MessagesPage currentUser={user} />;
