@@ -59,10 +59,11 @@
 }
 
 /* Contact/social section */
-.footer-contact {
-  align-items: flex-end;
-  text-align: right;
-  gap: 6px;
+.footer-contact-title {
+  font-weight: 600;
+  font-size: 1.08rem;
+  margin-bottom: 2px;
+  color: #181818;
 }
 
 .footer-contact-link {
