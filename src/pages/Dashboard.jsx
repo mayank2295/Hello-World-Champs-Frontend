@@ -9,6 +9,7 @@ import Settings from "./Settings";
 import EventsPage from "./EventsPage";
 import CommunityPage from "./CommunityPage";
 import JobsPage from "./JobsPage";
+import CoursesPage from "./CoursesPage"; // IMPORT THE NEW PAGE
 import { collection, collectionGroup, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import {
@@ -22,7 +23,8 @@ import {
   MdClose,
   MdNotifications,
   MdChat,
-  MdAutoAwesome
+  MdAutoAwesome,
+  MdSchool // IMPORT THE COURSES ICON
 } from "react-icons/md";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -32,6 +34,7 @@ const SIDEBAR_MENU = [
   { name: "People", icon: <MdPeople /> },
   { name: "Jobs", icon: <MdWork /> },
   { name: "Community", icon: <MdGroups /> },
+  { name: "Courses", icon: <MdSchool /> }, // ADD 'COURSES' TO THE MENU
   { name: "DreamFlow AI", icon: <MdAutoAwesome /> },
   { name: "Notifications", icon: <MdNotifications /> },
   { name: "Messages", icon: <MdChat /> },
@@ -49,7 +52,8 @@ function getInitial(name, email) {
 
 function getTabFromQuery(location) {
   const params = new URLSearchParams(location.search);
-  if (params.get("tab") === "settings") return 9;
+  // The index for Settings is now 10
+  if (params.get("tab") === "settings") return 10;
   return null;
 }
 
@@ -164,14 +168,15 @@ export default function Dashboard() {
         </div>
       );
     }
-
-    if (activeIndex === 9) {
+    
+    // Note: The activeIndex values have shifted because we added "Courses"
+    if (activeIndex === 10) { // Was 9
       return <Settings currentUser={user} />;
     }
-    if (activeIndex === 7) {
+    if (activeIndex === 8) { // Was 7
       return <ResumeBuilder />;
     }
-    if (activeIndex === 6) {
+    if (activeIndex === 7) { // Was 6
       return <EventsPage />;
     }
     if (activeIndex === 2) {
@@ -183,10 +188,11 @@ export default function Dashboard() {
 
     switch (activeIndex) {
       case 0: return <PeoplePage userName={userName || userEmail} currentUser={user} />;
-      case 3: return <DreamFlowPage currentUser={user} />;
-      case 4: return <NotificationsPage currentUser={user} />;
-      case 5: return <MessagesPage currentUser={user} />;
-      case 8: return <ResumeAnalyserPage currentUser={user} />;
+      case 3: return <CoursesPage currentUser={user} />; // RENDER THE NEW PAGE
+      case 4: return <DreamFlowPage currentUser={user} />;
+      case 5: return <NotificationsPage currentUser={user} />;
+      case 6: return <MessagesPage currentUser={user} />;
+      case 9: return <ResumeAnalyserPage currentUser={user} />;
       default:
         return (
           <div className="dashboard-center">
