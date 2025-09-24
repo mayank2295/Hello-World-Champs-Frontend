@@ -8,7 +8,6 @@ import ChatPage from "./pages/ChatPage";
 import QuizPage from "./pages/QuizPage";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
-import HeroSection from "./components/HeroSection"; // ✅ New hero import
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -48,6 +47,29 @@ function RequireQuizCompleted({ children }) {
   return allow ? children : null;
 }
 
+function HeroSection() {
+  return (
+    <>
+      <Navbar />
+      <main className="main-hero">
+        <section className="hero-content">
+          <div className="hero-overline">MORE THAN AN AI CAREER ADVISOR</div>
+          <h1 className="hero-heading">
+            Discover your<br />
+            perfect career path
+          </h1>
+          <p className="hero-subtext">
+            With our AI-powered platform, you can explore, analyze, and optimize your career journey. 
+            Get personalized guidance, skill gap analysis, and curated resources—built just for Indian students.
+          </p>
+          <a href="/signup" className="hero-btn">Start building</a>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
+}
+
 export default function App() {
   const location = useLocation();
   const fullscreenRoutes = ["/login", "/signup", "/dashboard", "/quiz"];
@@ -57,11 +79,16 @@ export default function App() {
 
   return (
     <Routes>
-      {/* ✅ Updated home route with HeroSection */}
+      {/* Homepage: WITH Navbar and Footer, old hero section style */}
       <Route path="/" element={<HeroSection />} />
 
+      {/* Login page: FULLSCREEN, NO Navbar/Footer */}
       <Route path="/login" element={<LoginPage />} />
+
+      {/* Signup page: FULLSCREEN, NO Navbar/Footer */}
       <Route path="/signup" element={<AuthPage type="signup" />} />
+
+      {/* Dashboard page: Requires quiz completion */}
       <Route
         path="/dashboard"
         element={
@@ -70,6 +97,7 @@ export default function App() {
           </RequireQuizCompleted>
         }
       />
+      {/* Chat page: Requires quiz completion */}
       <Route
         path="/chat/:chatId"
         element={
@@ -78,6 +106,7 @@ export default function App() {
           </RequireQuizCompleted>
         }
       />
+      {/* Settings page: Requires quiz completion */}
       <Route
         path="/settings"
         element={
@@ -86,6 +115,7 @@ export default function App() {
           </RequireQuizCompleted>
         }
       />
+      {/* Profile page: Requires quiz completion */}
       <Route
         path="/profile"
         element={
@@ -94,6 +124,7 @@ export default function App() {
           </RequireQuizCompleted>
         }
       />
+      {/* Quiz page: FULLSCREEN, NO Navbar/Footer */}
       <Route path="/quiz" element={<QuizPage />} />
     </Routes>
   );
